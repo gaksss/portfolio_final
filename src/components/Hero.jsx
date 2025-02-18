@@ -2,7 +2,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Link } from "react-router-dom";
 import { styles } from "../styles";
 import { navLinks } from "../constants";
-import { shaq, earth, worldmap, iss } from "../assets";
+import { shaq, earth, earthNight, worldmap, iss } from "../assets";
 import { useState, useEffect } from "react";
 
 const Hero = () => {
@@ -53,7 +53,7 @@ const Hero = () => {
           }}
         >
           <img
-            src={worldmap}
+            src={earthNight}
             alt="hover background"
             className="w-full h-full object-cover"
           />
