@@ -7,22 +7,36 @@ import { useState, useEffect } from "react";
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
   const mouseX = useSpring(0, { stiffness: 500, damping: 50 });
   const mouseY = useSpring(0, { stiffness: 500, damping: 50 });
 
   useEffect(() => {
+    // Vérifier si on est sur mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // 768px est le breakpoint sm de Tailwind
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
     const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20;
-      const y = (e.clientY / window.innerHeight - 0.5) * 20;
-      
-      mouseX.set(x);
-      mouseY.set(y);
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      if (!isMobile) {
+        const x = (e.clientX / window.innerWidth - 0.5) * 20;
+        const y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+        mouseX.set(x);
+        mouseY.set(y);
+        setMousePosition({ x: e.clientX, y: e.clientY });
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, [mouseX, mouseY, isMobile]);
 
   return (
     <>
@@ -33,35 +47,35 @@ const Hero = () => {
           y: mouseY,
         }}
       >
-        {/* Image de base (earth) */}
         <img
           src={earth}
           alt="background"
           className="w-full h-full object-cover"
         />
-        
-        {/* Image révélée au survol (worldmap) */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            maskImage: `radial-gradient(circle 150px at ${mousePosition.x}px ${mousePosition.y}px, black 0%, transparent 100%)`,
-            WebkitMaskImage: `radial-gradient(circle 150px at ${mousePosition.x}px ${mousePosition.y}px, black 60%, transparent 100%)`,
-          }}
-        >
-          <img
-            src={earthNight}
-            alt="hover background"
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </motion.div>
 
+        {/* Masquer complètement l'effet sur mobile */}
+        {!isMobile && (
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              maskImage: `radial-gradient(circle 150px at ${mousePosition.x}px ${mousePosition.y}px, black 0%, transparent 100%)`,
+              WebkitMaskImage: `radial-gradient(circle 150px at ${mousePosition.x}px ${mousePosition.y}px, black 60%, transparent 100%)`,
+            }}
+          >
+            <img
+              src={earthNight}
+              alt="hover background"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        )}
+      </motion.div>
       <section
-        className="relative flex sm:flex-row flex-col w-full h-screen mx-auto 
+        className="flex sm:flex-row flex-col w-full h-screen mx-auto 
          overflow-hidden"
       >
         <div
@@ -79,7 +93,6 @@ const Hero = () => {
             <h1
               className={`${styles.heroHeadText} text-[#d9d9d9] font-poppins uppercase`}
             >
-             
               <span
                 className="sm:text-[#FFFFFF] sm:text-[90px] 
                 text-eerieBlack text-[50px] font-mova

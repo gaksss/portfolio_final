@@ -37,6 +37,16 @@
   color-scheme: dark;
 }
 
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 .nav-links::after {
   content: "";
   display: block;

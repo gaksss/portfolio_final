@@ -7,15 +7,15 @@ import {
   Navbar,
   Tech,
   Projects,
-  
+  // Footer,
 } from "./components";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="relative z-0 overflow-hidden">
-        <div>
+      <div className="z-0 overflow-hidden">
           <Navbar />
+        <div>
           <Hero />
         </div>
 

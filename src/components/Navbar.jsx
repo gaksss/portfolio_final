@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion"; // Ajout de l'import
 import { styles } from "../styles";
 import { navLinks } from "../constants";
 import { close, menu, logo, logotext } from "../assets";
@@ -8,10 +9,43 @@ const Navbar = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
 
+  useEffect(() => {
+    if (toggle) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [toggle]);
+
+  const menuVariants = {
+    initial: {
+      opacity: 0,
+      x: "100%",
+    },
+    animate: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        duration: 0.8,
+        stiffness: 80,
+      },
+    },
+    exit: {
+      opacity: 0,
+      x: "100%",
+      transition: {
+        duration: 0.4,
+      },
+    },
+  };
+
   return (
     <nav
-      className={`${styles.paddingX} w-full flex items-center py-2 fixed 
-      top-0 z-20 bg-flashWhite sm:opacity-[0.97] xxs:h-[12vh]`}
+      className={`${styles.paddingX} w-full flex items-center py-2 fixed top-0 z-20 bg-flashWhite sm:opacity-[0.97] xxs:h-[12vh]`}
     >
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
         <Link
@@ -27,25 +61,19 @@ const Navbar = () => {
             alt="logo"
             className="sm:w-[50px] sm:h-[50px] w-[45px] h-[45px] object-contain"
           /> */}
-
-          {/* if you have text you want besides your logo it comes here.
-          Otherwise delete this if you don't need it. */}
-          <h2
-            className="text-eerieBlack
-              hover:text-taupe text-[21px] font-medium font-mova 
-                uppercase tracking-[3px] cursor-pointer nav-links"
-          >
+          <h2 className="text-eerieBlack hover:text-taupe text-[21px] font-medium font-mova uppercase tracking-[3px] cursor-pointer nav-links">
             Clément
           </h2>
         </Link>
+
+        {/* Desktop Navigation */}
         <ul className="list-none hidden sm:flex flex-row gap-14 mt-2">
           {navLinks.map((nav) => (
             <li
               key={nav.id}
               className={`${
                 active === nav.title ? "text-french" : "text-eerieBlack"
-              } hover:text-taupe text-[21px] font-medium font-mova 
-                uppercase tracking-[3px] cursor-pointer nav-links`}
+              } hover:text-taupe text-[21px] font-medium font-mova uppercase tracking-[3px] cursor-pointer nav-links`}
               onClick={() => setActive(nav.title)}
             >
               <a href={`#${nav.id}`}>{nav.title}</a>
@@ -53,46 +81,46 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* mobile */}
-        <div className="sm:hidden flex flex-1 w-screen justify-end items-center">
-          {toggle ? (
-            <div
-              className={`p-6 bg-flashWhite opacity-[0.98] absolute 
-                top-0 left-0 w-screen h-[100vh] z-10 menu leading-tight ${
-                  toggle ? "menu-open" : "menu-close"
-                }`}
-            >
-              <div className="flex justify-end">
-                <img
-                  src={close}
-                  alt="close"
-                  className="w-[22px] h-[22px] object-contain cursor-pointer"
-                  onClick={() => setToggle(!toggle)}
-                />
-              </div>
-              <ul
-                className="list-none flex flex-col -gap-[1rem] 
-                items-start justify-end mt-[10rem] -ml-[35px]"
+        {/* Mobile Navigation */}
+        <div className="sm:hidden flex justify-end items-center">
+          <AnimatePresence>
+            {toggle && (
+              <motion.div
+                className="fixed left-0 top-0 w-full h-screen bg-flashWhite"
+                style={{ overflowX: "hidden" }}
+                variants={menuVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
               >
-                {navLinks.map((nav) => (
-                  <li
-                    id={nav.id}
-                    key={nav.id}
-                    className={`${
-                      active === nav.title ? "text-french" : "text-eerieBlack"
-                    } text-[48px] font-bold font-arenq 
-                      uppercase tracking-[1px] cursor-pointer`}
-                    onClick={() => {
-                      setToggle(!toggle);
-                      setActive(nav.title);
-                    }}
-                  >
-                    <a href={`#${nav.id}`}>{nav.title}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
+                <div className="flex justify-end p-6">
+                  <img
+                    src={close}
+                    alt="close"
+                    className="w-[22px] h-[22px] object-contain cursor-pointer"
+                    onClick={() => setToggle(!toggle)}
+                  />
+                </div>
+                <ul className="flex flex-col items-center justify-center h-[calc(100%-80px)] gap-8">
+                  {navLinks.map((nav) => (
+                    <li
+                      key={nav.id}
+                      className={`${
+                        active === nav.title ? "text-french" : "text-eerieBlack"
+                      } text-[32px] font-bold font-mova uppercase tracking-[1px] cursor-pointer transition-colors duration-300 hover:text-taupe`}
+                      onClick={() => {
+                        setToggle(!toggle);
+                        setActive(nav.title);
+                      }}
+                    >
+                      <a href={`#${nav.id}`}>{nav.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          {!toggle && (
             <img
               src={menu}
               alt="menu"

@@ -125,25 +125,11 @@ const technologies = [
 
 const experiences = [
   {
-    title: "Missions d'intérim",
-    company_name: "Compagnies differentes",
-    icon: coverhunt,
+    title: "Developpeur web",
+    company_name: "Freelance",
+    icon: dcc,
     iconBg: "#333333",
-    date: "2022 - Feb 2024",
-  },
-  {
-    title: "Job étudiant grande surface",
-    company_name: "Leclerc",
-    icon: microverse,
-    iconBg: "#333333",
-    date: "Aout 2021 - Septembre 2021",
-  },
-  {
-    title: "Vendeur prêt à porter",
-    company_name: "Uniqlo",
-    icon: kelhel,
-    iconBg: "#333333",
-    date: "Septembre 2022 - Decembre 2022",
+    date: "Juin 2024 - Septembre 2024",
   },
   {
     title: "Vendeur prêt à porter",
@@ -153,11 +139,25 @@ const experiences = [
     date: "Juillet 2024 - Aout 2024",
   },
   {
-    title: "Developpeur web",
-    company_name: "Freelance",
-    icon: dcc,
+    title: "Vendeur prêt à porter",
+    company_name: "Uniqlo",
+    icon: kelhel,
     iconBg: "#333333",
-    date: "Juin 2024 - Septembre 2024",
+    date: "Septembre 2022 - Decembre 2022",
+  },
+  {
+    title: "Job étudiant grande surface",
+    company_name: "Leclerc",
+    icon: microverse,
+    iconBg: "#333333",
+    date: "Aout 2021 - Septembre 2021",
+  },
+  {
+    title: "Missions d'intérim",
+    company_name: "Compagnies differentes",
+    icon: coverhunt,
+    iconBg: "#333333",
+    date: "2022 - Feb 2024",
   },
 ];
 
