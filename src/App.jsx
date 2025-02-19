@@ -7,7 +7,7 @@ import {
   Navbar,
   Tech,
   Projects,
-  // Footer,
+  
 } from "./components";
 
 const App = () => {
