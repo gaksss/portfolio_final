@@ -1,4 +1,4 @@
-import earth from "@/assets/backgrounds/earth.png";
+import earth from './backgrounds/earth.png';
 import earthNight from './backgrounds/earthNight.png';
 import nairobi from './backgrounds/nairobi.png';
 import whiteabstract from './backgrounds/white-abstract.png';
