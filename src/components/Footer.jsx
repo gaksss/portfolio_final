@@ -5,10 +5,7 @@ import { slideIn } from "../utils/motion";
 
 const Footer = () => {
   return (
-    <motion.footer
-      variants={slideIn("up", "tween", 0.2, 1)}
-      className=""
-    >
+    
       <div className="container mx-auto px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Section À propos */}
@@ -60,7 +57,7 @@ const Footer = () => {
                 href="https://github.com/gaksss"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-secondary hover:text-white transition-colors"
+                className="text-secondary hover:text-orange-400 transition-colors"
               >
                 <svg
                   className="w-6 h-6"
@@ -79,7 +76,7 @@ const Footer = () => {
                 href="https://www.linkedin.com/in/cl%C3%A9ment-carlier/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-secondary hover:text-white transition-colors"
+                className="text-secondary hover:text-blue-600 transition-colors"
               >
                 <svg
                   className="w-6 h-6"
@@ -94,14 +91,10 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="text-center pt-8 mt-8 border-t border-white/10">
-          {/* <p className="text-secondary">
-            © {new Date().getFullYear()} Votre Nom. Tous droits réservés.
-          </p> */}
-        </div>
+     
+       
       </div>
-    </motion.footer>
+    
   );
 };
 

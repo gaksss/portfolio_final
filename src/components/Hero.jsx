@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { styles } from "../styles";
 import { navLinks } from "../constants";
@@ -8,13 +8,10 @@ import { useState, useEffect } from "react";
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
-  const mouseX = useSpring(0, { stiffness: 500, damping: 50 });
-  const mouseY = useSpring(0, { stiffness: 500, damping: 50 });
 
   useEffect(() => {
-    // Vérifier si on est sur mobile
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768); // 768px est le breakpoint sm de Tailwind
+      setIsMobile(window.innerWidth < 768);
     };
 
     checkMobile();
@@ -22,11 +19,6 @@ const Hero = () => {
 
     const handleMouseMove = (e) => {
       if (!isMobile) {
-        const x = (e.clientX / window.innerWidth - 0.5) * 20;
-        const y = (e.clientY / window.innerHeight - 0.5) * 20;
-
-        mouseX.set(x);
-        mouseY.set(y);
         setMousePosition({ x: e.clientX, y: e.clientY });
       }
     };
@@ -36,17 +28,11 @@ const Hero = () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", checkMobile);
     };
-  }, [mouseX, mouseY, isMobile]);
+  }, [isMobile]);
 
   return (
     <>
-      <motion.div
-        className="absolute top-0 left-0 z-0 h-[100vh] w-screen"
-        style={{
-          x: mouseX,
-          y: mouseY,
-        }}
-      >
+      <div className="absolute top-0 left-0 z-0 h-[100vh] w-screen">
         <img
           src={earth}
           alt="background"
@@ -73,7 +59,7 @@ const Hero = () => {
             />
           </div>
         )}
-      </motion.div>
+      </div>
       <section
         className="flex sm:flex-row flex-col w-full h-screen mx-auto 
          overflow-hidden"
