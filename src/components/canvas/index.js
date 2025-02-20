@@ -1,3 +1,4 @@
 import BallCanvas from './Ball';
+import CubeCanvas from './Cube';
 
-export { BallCanvas };
+export { BallCanvas, CubeCanvas };
