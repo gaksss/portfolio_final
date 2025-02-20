@@ -5,7 +5,8 @@ import { navLinks } from "../constants";
 import { shaq, earth, earthNight, worldmap, iss } from "../assets";
 import { useState, useEffect } from "react";
 import { CubeCanvas } from "./canvas";
-import { github } from "../assets";
+import { moonMap, moonNormalMap } from "../assets";
+import SphereCanvas from "./canvas/Sphere";
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -40,8 +41,9 @@ const Hero = () => {
           alt="background"
           className="w-full h-full object-cover"
         />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] z-10">
-          <CubeCanvas icon={github} />
+        {/* Modifiez ce conteneur */}
+        <div className="absolute top-0 right-0 w-[100vw] h-[100vh]">
+          <SphereCanvas icon={moonMap} normalMap={moonNormalMap} />
         </div>
         {/* Masquer complètement l'effet sur mobile */}
         {!isMobile && (

@@ -52,6 +52,14 @@ import combat from './projects/combat.png';
 import luxury from './projects/luxury.png';
 import space from './projects/space-hub.png';
 
+
+
+// EARTH THREEJS 
+
+
+import moonMap from './moon/moon.jpg';
+import moonNormalMap from './moon/normal.jpg';
+
 export {
   iss,
   earth,
@@ -100,6 +108,8 @@ export {
   dcc,
   kelhel,
   microverse,
+  moonMap,
+  moonNormalMap,
 };
 
 
