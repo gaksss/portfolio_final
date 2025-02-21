@@ -45,16 +45,55 @@ const SatelliteCanvas = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   const [canScroll, setCanScroll] = useState(false); // Nouvel état
+  const [isMobile, setIsMobile] = useState(false);
+  const touchStartY = useRef(0);
   const scrollThreshold = 300;
   const lastScrollY = useRef(0);
   const containerRef = useRef(null);
   const heroRef = useRef(null);
 
   useEffect(() => {
-    const handleWheel = (e) => {
+    // Détection mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    const handleTouchStart = (e) => {
+      if (!isAnimationComplete) {
+        touchStartY.current = e.touches[0].clientY;
+      }
+    };
+
+    const handleTouchMove = (e) => {
       if (!isAnimationComplete) {
         e.preventDefault();
+        const touchY = e.touches[0].clientY;
+        const delta = touchStartY.current - touchY;
         
+        const currentScroll = lastScrollY.current + delta;
+        const newScroll = Math.max(0, Math.min(currentScroll, scrollThreshold));
+        lastScrollY.current = newScroll;
+
+        const progress = newScroll / scrollThreshold;
+        setScrollProgress(progress);
+
+        if (progress >= 1 && !showCV) {
+          setShowCV(true);
+          setIsAnimationComplete(true);
+          setTimeout(() => {
+            setCanScroll(true);
+            document.body.style.overflow = 'auto';
+          }, 2000);
+        }
+
+        touchStartY.current = touchY;
+      }
+    };
+
+    const handleWheel = (e) => {
+      if (!isAnimationComplete && !isMobile) {
         const delta = e.deltaY;
         const currentScroll = lastScrollY.current + delta;
         
@@ -104,16 +143,21 @@ const SatelliteCanvas = () => {
     const container = containerRef.current;
     if (container) {
       container.addEventListener('wheel', handleWheel, { passive: false });
+      container.addEventListener('touchstart', handleTouchStart, { passive: true });
+      container.addEventListener('touchmove', handleTouchMove, { passive: false });
     }
     window.addEventListener('scroll', handleScroll);
 
     return () => {
       if (container) {
         container.removeEventListener('wheel', handleWheel);
+        container.removeEventListener('touchstart', handleTouchStart);
+        container.removeEventListener('touchmove', handleTouchMove);
       }
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', checkMobile);
     };
-  }, [isAnimationComplete, showCV, canScroll]); // Ajouter canScroll aux dépendances
+  }, [isAnimationComplete, showCV, canScroll, isMobile]); // Ajouter canScroll et isMobile aux dépendances
 
   return (
     <div ref={containerRef} style={{ position: "relative" }}>
@@ -123,11 +167,15 @@ const SatelliteCanvas = () => {
         style={{
           height: "100vh",
           position: "relative",
-          transition: "opacity 0.3s ease"
+          transition: "opacity 0.3s ease",
+          touchAction: isMobile ? "none" : "auto" // Empêcher le scroll natif sur mobile pendant l'animation
         }}
       >
         <Canvas
-          camera={{ position: [10, 5, 10], fov: 45 }}
+          camera={{ 
+            position: isMobile ? [12, 6, 12] : [10, 5, 10], // Ajuster la caméra pour mobile
+            fov: isMobile ? 55 : 45 
+          }}
           style={{
             width: "100%",
             height: "100%",
@@ -150,6 +198,26 @@ const SatelliteCanvas = () => {
             />
           </Suspense>
         </Canvas>
+
+        {/* Indicateur de scroll pour mobile */}
+        {isMobile && !isAnimationComplete && (
+          <div
+            style={{
+              position: "absolute",
+              bottom: "20px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              color: "white",
+              textAlign: "center",
+              opacity: 0.8,
+              animation: "bounce 2s infinite",
+              pointerEvents: "none"
+            }}
+          >
+            <div>Swipez vers le haut</div>
+            <div style={{ fontSize: "24px" }}>↑</div>
+          </div>
+        )}
 
         {/* CV Modal */}
         {showCV && (
@@ -249,6 +317,17 @@ const SatelliteCanvas = () => {
           @keyframes fadeIn {
             from { opacity: 0; transform: translate(-50%, -48%); }
             to { opacity: 1; transform: translate(-50%, -50%); }
+          }
+          @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+              transform: translateY(0);
+            }
+            40% {
+              transform: translateY(-10px);
+            }
+            60% {
+              transform: translateY(-5px);
+            }
           }
         `}
       </style>
