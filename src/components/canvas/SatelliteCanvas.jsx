@@ -194,25 +194,8 @@ const SatelliteCanvas = () => {
           </Suspense>
         </Canvas>
 
-        {/* Indicateur de scroll pour mobile */}
-        {!isAnimationComplete && (
-          <div
-            style={{
-              position: "absolute",
-              bottom: "20px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              color: "white",
-              textAlign: "center",
-              opacity: 0.8,
-              animation: "bounce 2s infinite",
-              pointerEvents: "none"
-            }}
-          >
-            <div>{isMobile ? "Swipez" : "Scrollez"} vers le haut</div>
-            <div style={{ fontSize: "24px" }}>↑</div>
-          </div>
-        )}
+       
+        
 
         {/* CV Modal */}
         {showCV && (
