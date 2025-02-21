@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { CubeCanvas } from "./canvas";
 import { moonMap, moonNormalMap } from "../assets";
 import SphereCanvas from "./canvas/Sphere";
+import SatelliteCanvas from "./canvas/SatelliteCanvas";
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -35,6 +36,7 @@ const Hero = () => {
 
   return (
     <>
+    
       <div className="absolute top-0 left-0 z-0 h-[100vh] w-screen">
         <img
           src={earth}
@@ -42,9 +44,7 @@ const Hero = () => {
           className="w-full h-full object-cover"
         />
         {/* Modifiez ce conteneur */}
-        <div className="absolute top-0 right-0 w-[100vw] h-[100vh]">
-          <SphereCanvas icon={moonMap} normalMap={moonNormalMap} />
-        </div>
+      
         {/* Masquer complètement l'effet sur mobile */}
         {!isMobile && (
           <div
@@ -58,17 +58,25 @@ const Hero = () => {
               WebkitMaskImage: `radial-gradient(circle 150px at ${mousePosition.x}px ${mousePosition.y}px, black 60%, transparent 100%)`,
             }}
           >
+            
             <img
               src={earthNight}
               alt="hover background"
               className="w-full h-full object-cover"
             />
           </div>
+          
         )}
+          <div className="absolute top-0 right-0 w-[100vw] h-[100vh]">
+          {/* <SphereCanvas icon={moonMap} normalMap={moonNormalMap} /> */}
+          
+          <SatelliteCanvas />
+          
+        </div>
       </div>
       <section
         className="flex sm:flex-row flex-col w-full h-screen mx-auto 
-         overflow-hidden"
+         overflow-hidden pointer-events-none"
       >
         <div
           className={`absolute inset-0 sm:top-[250px] top-[150px] 

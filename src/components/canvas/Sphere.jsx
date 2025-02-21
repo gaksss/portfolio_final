@@ -22,7 +22,7 @@ const Sphere = ({ imgUrl, normalMapUrl }) => {
       <meshStandardMaterial
         map={colorMap}
         normalMap={normalMap}
-        normalScale={[0.5, 0.5]}
+        normalScale={[0.3, 0.3]}
       />
     </mesh>
   );
