@@ -1,6 +1,5 @@
 import React, { Suspense, useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
 import { Satellite } from "./Satellite";
 import Loader from "../Loader";
 import { AiOutlineFilePdf } from 'react-icons/ai'; // Ajouter cette importation
@@ -72,7 +71,7 @@ const SatelliteCanvas = () => {
         const touchY = e.touches[0].clientY;
         const delta = touchStartY.current - touchY;
         
-        const currentScroll = lastScrollY.current + delta;
+        const currentScroll = lastScrollY.current + delta * 2; // Multiplier pour une meilleure sensibilité
         const newScroll = Math.max(0, Math.min(currentScroll, scrollThreshold));
         lastScrollY.current = newScroll;
 
@@ -93,7 +92,8 @@ const SatelliteCanvas = () => {
     };
 
     const handleWheel = (e) => {
-      if (!isAnimationComplete && !isMobile) {
+      if (!isAnimationComplete) {
+        e.preventDefault();
         const delta = e.deltaY;
         const currentScroll = lastScrollY.current + delta;
         
@@ -168,7 +168,7 @@ const SatelliteCanvas = () => {
           height: "100vh",
           position: "relative",
           transition: "opacity 0.3s ease",
-          touchAction: isMobile ? "none" : "auto" // Empêcher le scroll natif sur mobile pendant l'animation
+          touchAction: isAnimationComplete ? "auto" : "none" // Empêcher le scroll natif sur mobile pendant l'animation
         }}
       >
         <Canvas
@@ -191,16 +191,11 @@ const SatelliteCanvas = () => {
               scrollProgress={scrollProgress} 
               isAnimationComplete={isAnimationComplete}
             />
-            <OrbitControls 
-              enableZoom={false} 
-              autoRotate={false}
-              enabled={isAnimationComplete}
-            />
           </Suspense>
         </Canvas>
 
         {/* Indicateur de scroll pour mobile */}
-        {isMobile && !isAnimationComplete && (
+        {!isAnimationComplete && (
           <div
             style={{
               position: "absolute",
@@ -214,7 +209,7 @@ const SatelliteCanvas = () => {
               pointerEvents: "none"
             }}
           >
-            <div>Swipez vers le haut</div>
+            <div>{isMobile ? "Swipez" : "Scrollez"} vers le haut</div>
             <div style={{ fontSize: "24px" }}>↑</div>
           </div>
         )}
