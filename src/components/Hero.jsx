@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { CubeCanvas } from "./canvas";
 import { moonMap, moonNormalMap } from "../assets";
 import SphereCanvas from "./canvas/Sphere";
-import SatelliteCanvas from "./canvas/SatelliteCanvas";
+
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -70,7 +70,7 @@ const Hero = () => {
           <div className="absolute top-0 right-0 w-[100vw] h-[100vh]">
           <SphereCanvas icon={moonMap} normalMap={moonNormalMap} />
           
-          {/* <SatelliteCanvas /> */}
+         
           
         </div>
       </div>

@@ -1,12 +1,29 @@
-import React, { Suspense, useRef, useState, useEffect } from "react";
+import React, { Suspense, useRef, useState, useEffect, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useTexture, Preload } from "@react-three/drei";
+import * as THREE from 'three';
 import Loader from "../Loader";
 import { AiOutlineFilePdf } from "react-icons/ai";
 
 const Sphere = ({ imgUrl, normalMapUrl, scrollProgress }) => {
-  const [colorMap, normalMap] = useTexture([imgUrl, normalMapUrl]);
+  // Optimisation des textures avec useMemo
+  const [colorMap, normalMap] = useMemo(() => {
+    const textureLoader = new THREE.TextureLoader();
+    const color = textureLoader.load(imgUrl, (texture) => {
+      texture.minFilter = THREE.LinearFilter;
+      texture.generateMipmaps = false;
+    });
+    const normal = textureLoader.load(normalMapUrl, (texture) => {
+      texture.minFilter = THREE.LinearFilter;
+      texture.generateMipmaps = false;
+    });
+    return [color, normal];
+  }, [imgUrl, normalMapUrl]);
+
   const sphereRef = useRef();
+  
+  // Optimisation de la géométrie avec useMemo
+  const geometry = useMemo(() => new THREE.SphereGeometry(2, 64, 64), []); // Réduction des segments
 
   useFrame(() => {
     if (sphereRef.current) {
@@ -32,12 +49,12 @@ const Sphere = ({ imgUrl, normalMapUrl, scrollProgress }) => {
   return (
     <mesh
       ref={sphereRef}
+      geometry={geometry}
       castShadow
       receiveShadow
       scale={1}
       position={[5, 2, -6]}
     >
-      <sphereGeometry args={[2, 200, 200]} />
       <meshStandardMaterial
         map={colorMap}
         normalMap={normalMap}
@@ -100,7 +117,11 @@ const SphereCanvas = ({ icon, normalMap }) => {
     <div ref={containerRef} className="h-screen sticky top-0">
       <Canvas
         frameloop="always"
-        gl={{ preserveDrawingBuffer: true }}
+        gl={{ 
+          preserveDrawingBuffer: true,
+          antialias: false, // Désactiver l'antialiasing pour de meilleures performances
+          powerPreference: "high-performance"
+        }}
         camera={{ position: [10, 5, 10], fov: 45 }}
         style={{
           position: "absolute",
@@ -109,6 +130,7 @@ const SphereCanvas = ({ icon, normalMap }) => {
           width: "100%",
           height: "100%",
         }}
+        dpr={[1, 1.5]} // Limiter le pixel ratio pour de meilleures performances
       >
         <Suspense fallback={<Loader />}>
           <ambientLight intensity={0.3} />
