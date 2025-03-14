@@ -51,6 +51,7 @@ import drumpad from './projects/TpDrumpad.png';
 import combat from './projects/combat.png';
 import luxury from './projects/luxury.png';
 import space from './projects/space-hub.png';
+import maclerion from './projects/maclerion.webp';
 
 
 
@@ -103,6 +104,7 @@ export {
   drumpad,
   combat,
   luxury,
+  maclerion,
   space,
   coverhunt,
   dcc,

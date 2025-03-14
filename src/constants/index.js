@@ -23,6 +23,7 @@ import {
   drumpad,
   combat,
   luxury,
+  maclerion,
   space,
   coverhunt,
   dcc,
@@ -239,6 +240,21 @@ const projects = [
     image: luxury,
     repo: "https://github.com/gaksss/luxury2",
     demo: "#",
+  },
+  {
+    id: "project-6",
+    name: "Cine-Court",
+    description:
+      "Un site de festival de court métrage fictif.",
+    tags: [
+      {
+        name: "wordpress",
+        color: "pink-text-gradient",
+      },
+    ],
+    image: maclerion,
+    repo: "",
+    demo: "https://maclerion-wordpress1.pro4.garage404.com/",
   },
 ];
 
