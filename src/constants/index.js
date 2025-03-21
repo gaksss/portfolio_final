@@ -41,8 +41,8 @@ export const navLinks = [
     title: "Projets",
   },
   {
-    id: 'work',
-    title: 'Experience',
+    id: "work",
+    title: "Experience",
   },
 ];
 
@@ -188,7 +188,7 @@ const projects = [
     tags: [],
     image: mountain,
     repo: "https://github.com/gaksss/TP_COMBAT",
-    demo: 'https://clement-the-mountain.pro4.garage404.com/',
+    demo: "https://clement-the-mountain.pro4.garage404.com/",
   },
   {
     id: "project-3",
@@ -238,14 +238,13 @@ const projects = [
       },
     ],
     image: luxury,
-    repo: "https://github.com/gaksss/luxury2",
-    demo: "#",
+    repo: "https://github.com/gaksss/LuxuryServices",
+    demo: "https://clement-luxury.pro4.garage404.com/",
   },
   {
     id: "project-6",
     name: "Cine-Court",
-    description:
-      "Un site de festival de court métrage fictif.",
+    description: "Un site de festival de court métrage fictif.",
     tags: [
       {
         name: "wordpress",
