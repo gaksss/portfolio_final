@@ -48,7 +48,7 @@ import microverse from './company/microverse.png';
 import celinefougerouse from './projects/celinefougerouse.png';
 import mountain from './projects/The_Mountain.png';
 import drumpad from './projects/TpDrumpad.png';
-import combat from './projects/combat.png';
+import prepwise from './projects/prepwise.png';
 import luxury from './projects/luxury.png';
 import space from './projects/space-hub.png';
 import maclerion from './projects/maclerion.webp';
@@ -102,7 +102,7 @@ export {
   celinefougerouse,
   mountain,
   drumpad,
-  combat,
+  prepwise,
   luxury,
   maclerion,
   space,

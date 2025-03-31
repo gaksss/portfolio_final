@@ -21,7 +21,7 @@ import {
   celinefougerouse,
   mountain,
   drumpad,
-  combat,
+  prepwise,
   luxury,
   maclerion,
   space,
@@ -187,7 +187,7 @@ const projects = [
     description: "Un site qui m'a appris le responsive.",
     tags: [],
     image: mountain,
-    repo: "https://github.com/gaksss/TP_COMBAT",
+    repo: "https://github.com/gaksss/The-Mountain-Tailwind",
     demo: "https://clement-the-mountain.pro4.garage404.com/",
   },
   {
@@ -210,21 +210,25 @@ const projects = [
   },
   {
     id: "project-4",
-    name: "Tp-combat",
-    description: `Un site de jeu de combat au tour par tour pour maitriser la POO.`,
+    name: "PrepWise",
+    description: `Un site pour s'entraîner à passer des entretiens avec une IA(Travail toujours en cours).`,
     tags: [
       {
-        name: "php",
+        name: "nextJs",
         color: "green-text-gradient",
       },
       {
         name: "css",
         color: "pink-text-gradient",
       },
+      {
+        name: "Vapi",
+        color: "blue-text-gradient",
+      },
     ],
-    image: combat,
-    repo: "https://github.com/gaksss/TP_COMBAT",
-    demo: "https://clement-tp-combat.pro4.garage404.com/public/create-hero.php",
+    image: prepwise,
+    repo: "https://github.com/gaksss/ai_mock_interview",
+    demo: "https://ai-mock-interview-f95u.vercel.app/",
   },
   {
     id: "project-5",
